@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scheduling Program</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}">
+</head>
+	<body>
+		<div class="topnav">
+		  <h1>Scheduling Program</h1>
+		</div>
+		<div class="content">
+		  <div class="card-grid">
+			<div class="card">
+			  <p class="card-title"><i class="fas fa-lightbulb"></i> Scheduling </p>
+				<form action="update/" method="POST">
+					{% csrf_token %}
+					<h2 style="color:green">Scheduling Type 1:</h1>
+					<h3>Choose Date and Time:
+					  <input type="datetime-local" id="Test_DatetimeLocal" name='datetimevalue'> <br> <br>
+					  <label for="lamp">Choose Lamp:</label>
+								<select id="lamp" name="lamp">
+								   <option selected>Lamp 1</option>
+								   <option>Lamp 2</option>
+                                </select> <br>
+					  <label for="state">Choose State:</label>
+								<select id="state" name="state">
+								   <option selected>ON</option>
+								   <option>OFF</option>
+                                </select> <br>
+					  <input type ="submit" value ="Submit">
+					</h3>
+				</form>
+		    </div>
+		  </div>
+		</div>
+	</body>
+</html>
+
+ 
