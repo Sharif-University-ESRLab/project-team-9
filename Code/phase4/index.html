@@ -1,0 +1,90 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ESP WEB SERVER</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="topnav">
+      <h1>ESP WEB SERVER</h1>
+    </div>
+    <div class="content">
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-title"><i class="fas fa-lightbulb"></i> لامپ اول</p>
+          <p>
+            <a href="turnon/1"><button class="button-on">روشن</button></a>
+            <a href="turnoff/1"><button class="button-off">خاموش</button></a>
+          </p>
+          <p class="state">وضعیت: {{STATE1}}</p>
+        </div>
+		<div class="card">
+          <p class="card-title"><i class="fas fa-lightbulb"></i> لامپ دوم</p>
+          <p>
+            <a href="turnon/2"><button class="button-on">روشن</button></a>
+            <a href="turnoff/2"><button class="button-off">خاموش</button></a>
+          </p>
+          <p class="state">وضعیت: {{STATE2}}</p>
+        </div>
+		<div class="card">
+          <p class="card-title"><i class="fas fa-lightbulb"></i>برنامه ریزی</p>
+          <p>
+            <a href="schedule"><button class="button-on">انتخاب وقت</button></a>
+          </p>
+        </div>
+		<div class="card">
+          <p class="card-title"><i class="fas fa-lightbulb"></i>استفاده از صوت</p>
+          <p>
+            <form id="labnol" method="get" action="https://www.google.com/search">
+				<div class="speech">
+					<input type="text" name="q" id="transcript" placeholder="صحبت کنید..." />
+					<img onclick="startDictation()" src="https://i.imgur.com/cHidSVu.gif" />
+					<p id="demo"></p>
+				</div>
+			</form>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!-- HTML5 Speech Recognition API -->
+<script>
+  function startDictation() {
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+      var recognition = new webkitSpeechRecognition();
+
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.lang = 'fa-IR';
+      recognition.start();
+
+      recognition.onresult = function (e) {
+        document.getElementById('transcript').value = e.results[0][0].transcript;
+		$.ajax({
+            url: '/action="voiceprocess"/',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data) {
+                $('#target').html(command.msg);
+            },
+            command: JSON.stringify(e.results[0][0].transcript)
+        });
+        recognition.stop();
+        // document.getElementById('labnol').submit();
+      };
+
+      recognition.onerror = function (e) {
+        recognition.stop();
+      };
+    }
+  }
+</script>
