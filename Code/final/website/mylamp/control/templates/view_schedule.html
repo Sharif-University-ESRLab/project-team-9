@@ -1,0 +1,42 @@
+{% load static %}
+
+<html dir="rtl">
+<head>
+  <title>زمان بندی لامپ ها</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}">
+</head>
+	<body>
+		<div class="topnav">
+		  <h1>زمان بندی لامپ ها</h1>
+		</div>
+		<div class="content">
+		  <div class="card-grid">
+			<div class="card">
+			  <p class="card-title"><i class="fas fa-lightbulb"></i>برنامه تنظیم شده </p>
+				<table border="1" align=center>
+					<tr>
+					<td> زمان </td>
+					<td> لامپ </td>
+					<td> وضعیت </td>
+					<td> تکرار هفتگی </td>
+					</tr>
+					{% for x in myschedule %}
+					<tr>
+					<td>{{ x.datetime_field }}</td>
+					<td>{{ x.desired_lamp }}</td>
+					<td>{{ x.desired_status }}</td>
+					<td>{{ x.repeat_weekly }}</td>
+					<td><a href="delete/{{ x.id }}">delete</a>
+					</tr>
+					{% endfor %}
+					</table>
+		    </div>
+		  </div>
+		</div>
+	</body>
+</html>
+
+ 

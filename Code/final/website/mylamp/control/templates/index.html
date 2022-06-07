@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ESP WEB SERVER</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <div class="topnav">
+      <h1>کنترل لامپ ها</h1>
+    </div>
+    <div class="content">
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-title"><i class="fas fa-lightbulb"></i>کنترل از راه دور</p>
+          <p>
+			<a href="manualcontrol"><button class="button-on"> واحد کنترل</button></a>
+          </p>
+        </div>
+		<div class="card">
+          <p class="card-title"><i class="fas fa-lightbulb"></i>برنامه ریزی</p>
+          <p>
+            <a href="schedule"><button class="button-on">انتخاب وقت</button></a>
+          </p>
+        </div>
+		<div class="card">
+          <p class="card-title"><i class="fas fa-lightbulb"></i>برنامه</p>
+          <p>
+            <a href="viewschedule"><button class="button-on">نمایش برنامه</button></a>
+          </p>
+        </div>
+		<div class="card" onclick="startDictation()">
+          <p class="card-title"><i class="fas fa-lightbulb"></i>استفاده از صوت</p>
+		    {% csrf_token %}
+            <form id="labnol" method="POST" action="voiceprocess/">
+				<div class="speech">
+					<input type="text" name="command" id="transcript" placeholder="صحبت کنید..." dir="rtl"/>
+					<i id = "micophone" class="fa-solid fa-microphone" style="font-size: 22px"></i>
+				</div>
+			</form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!-- HTML5 Speech Recognition API -->
+<script>
+  function startDictation() {
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+      var recognition = new webkitSpeechRecognition();
+
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.lang = 'fa-IR';
+	  
+      recognition.start();
+	  
+      recognition.onresult = function (e) {
+        document.getElementById('transcript').value = e.results[0][0].transcript;
+        recognition.stop();
+        document.getElementById('labnol').submit();
+      };
+
+      recognition.onerror = function (e) {
+        recognition.stop();
+      };
+    }
+  }
+</script>

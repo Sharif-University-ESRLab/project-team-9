@@ -1,0 +1,44 @@
+{% load static %}
+
+<html dir="rtl">
+<head>
+  <title>زمان بندی لامپ ها</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}">
+</head>
+	<body>
+		<div class="topnav">
+		  <h1>زمان بندی لامپ ها</h1>
+		</div>
+		<div class="content">
+		  <div class="card-grid">
+			<div class="card">
+			  <p class="card-title"><i class="fas fa-lightbulb"></i> زمان بندی لامپ ها </p>
+				{% csrf_token %}
+				<form action="update/" method="POST">
+				<h3>تاریخ و زمان:
+				  <input type="datetime-local" id="Test_DatetimeLocal" name='datetimevalue'> 
+				  <input type="checkbox" id="checkbox1" name="checkbox1" value="ch">
+				  <label for="checkbox1">تکرار هفتگی</label> <br>
+				  <label for="lamp">لامپ:</label>
+							<select id="lamp" name="lamp">
+							   <option selected>لامپ 1</option>
+							   <option>لامپ 2</option>
+							</select> <br>
+				  <label for="state">وضعیت:</label>
+							<select id="state" name="state">
+							   <option selected>روشن</option>
+							   <option>خاموش</option>
+							</select> <br>
+				  <input type ="submit" value ="ثبت">
+				</h3>
+				</form>
+		    </div>
+		  </div>
+		</div>
+	</body>
+</html>
+
+ 
