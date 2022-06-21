@@ -1,0 +1,46 @@
+{% load static %}
+<!-- The user can view and delete the scheduled events at any time-->
+<html dir="rtl">
+<head>
+  <title>نمایش برنامه</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}">
+</head>
+	<body>
+		<div class="topnav">
+		  <h1>برنامه تغییرات</h1>
+		</div>
+		<div class="content">
+		  <div class="card-grid">
+			<div class="card">
+			  <p class="card-title"><i class="fas fa-lightbulb"></i>برنامه تنظیم شده </p>
+				<table class="styled-table" border="1" align=center>
+					<thead>
+					<th> زمان </th>
+					<th> لامپ </th>
+					<th> وضعیت </th>
+					<th> تکرار هفتگی </th>
+					</thead>
+					{% for x in myschedule %} <!-- Showing a row for all the scheduled events -->
+					<tbody>
+					<tr class="active-row">
+					<td>{{ x.datetime_field }}</td>
+					<td>{{ x.desired_lamp }}</td>
+					<td>{% if x.desired_status == True %}روشن{% else %}خاموش{% endif %}
+					</td>
+					<td>{% if x.repeat_weekly == True %}بله{% else %}خیر{% endif %}
+					</td>
+					<td><a href="delete/{{ x.id }}">حذف</a> <!-- Deleting the event if necessary -->
+					</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+		    </div>
+		  </div>
+		</div>
+	</body>
+</html>
+
+ 
